@@ -1,0 +1,60 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 03.11.2023 12:30:10
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :lauflicht 2 leds
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:2 leds gleichzeitig vom links und rechts gegeneinander
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000                            11  
+00001000  =00E00010                 12  led_address     equ     $E00010     *constante led_adresse = $E00010
+00001000  =000061A8                 13  delay_time      equ     25*1000    *constante delay_time = 100000 (dez)
+00001000                            14  
+00001000  103C 0081                 15      move.b  #129,d0
+00001004  123C 0001                 16      move.b  #1,d1
+00001008  143C 0080                 17      move.b  #128,d2
+0000100C                            18      
+0000100C                            19  loop:
+0000100C  263C 000061A8             20      move.l  #delay_time,d3
+00001012  13C0 00E00010             21      move.b  d0,led_address
+00001018  E319                      22      rol.b   #1,d1
+0000101A  E21A                      23      ror.b   #1,d2
+0000101C  1001                      24      move.b  d1,d0
+0000101E  D002                      25      add.b   d2,d0
+00001020                            26      
+00001020  6100 0008                 27      bsr     delay           *jump in subroutine
+00001024                            28      
+00001024  60E6                      29      bra     loop            *branch to loop
+00001026                            30  
+00001026  FFFF FFFF                 31      SIMHALT             ; halt simulator
+0000102A                            32  
+0000102A                            33  * Put variables and constants here
+0000102A                            34  
+0000102A                            35  delay:
+0000102A  5383                      36      sub.l   #1,d3   
+0000102C  B6BC 00000000             37      cmp.l   #0,d3   *compare d3 mit 0
+00001032  66F6                      38      bne     delay   *wenn nicht 0 == d3 jump zu delay
+00001034  4E75                      39      rts             *sonst jump aus subroutine raus
+00001036                            40  
+00001036                            41  
+00001036                            42  
+00001036                            43      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DELAY               102A
+DELAY_TIME          61A8
+LED_ADDRESS         E00010
+LOOP                100C
+START               1000
