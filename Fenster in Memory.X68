@@ -1,6 +1,6 @@
 *-----------------------------------------------------------
-* Title      :
-* Written by :
+* Title      :  2d array
+* Written by :  Alen l
 * Date       :  01.11.2023
 
 * Description:  Store a 2d array (6x6 bytes) of #00 in the memory beginnig @ mem adress $1054 to $10BA
@@ -24,7 +24,7 @@ loop1:
     
 loop2:
     add.l  #$9,A0       *addiere 9 zum register A0
-    move.b  #0,d0       *setzte register d0 zurrück auf den wert 0
+    move.b  #0,d0       *setzte register d0 zurrÃ¼ck auf den wert 0
     cmp.b   #0,d2       *vergleiche register d2 mit 0
     bls     end         *wenn d2 < 0 dann springe zu end:
     
