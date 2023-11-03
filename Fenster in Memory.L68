@@ -1,0 +1,57 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 03.11.2023 08:50:46
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :  01.11.2023
+00000000                             5  
+00000000                             6  * Description:  Store a 2d array (6x6 bytes) of #00 in the memory beginnig @ mem adress $1054 to $10BA
+00000000                             7  *-----------------------------------------------------------
+00001000                             8      ORG    $1000
+00001000                             9  START:                  ; first instruction of program
+00001000                            10  
+00001000                            11  * Put program code here
+00001000  103C 0000                 12      move.b  #0,d0       *byte Wert 0 ins Register d0 speichern
+00001004  207C 00001054             13      move.l  #$1054,A0   *long Wert 0x1054 ins Register A0 speichern
+0000100A  123C 0000                 14      move.b  #0,d1       *byte Wert 0 ins Register d0 speichern
+0000100E  143C 0006                 15      move.b  #6,d2       *byte Wert 6 ins Register d2 speichern
+00001012                            16      
+00001012                            17  loop1:    
+00001012  10C1                      18      move.b  d1,(A0)+    *schreibe wert von register d1 auf die memory adresse A0 und inkrementiere dan den adresswert
+00001014  B03C 0006                 19      cmp.b   #6,d0       *vergleiche wert aus register d0 mit 6
+00001018  6700 0006                 20      beq loop2           *wenn d0 == 6 dann springe in loop2
+0000101C                            21      
+0000101C  5200                      22      add.b   #1,d0       *addiere 1 zu dem register d0
+0000101E  60F2                      23      bra loop1           *springe zum anfang vom loop1    
+00001020                            24      
+00001020                            25  loop2:
+00001020  D1FC 00000009             26      add.l  #$9,A0       *addiere 9 zum register A0
+00001026  103C 0000                 27      move.b  #0,d0       *setzte register d0 zurrück auf den wert 0
+0000102A  B43C 0000                 28      cmp.b   #0,d2       *vergleiche register d2 mit 0
+0000102E  6300 0006                 29      bls     end         *wenn d2 < 0 dann springe zu end:
+00001032                            30      
+00001032  5302                      31      sub.b   #1,d2       *subtrahiere 1 vom register d2
+00001034  60DC                      32      bra loop1            *springe zum anfang von loop1
+00001036                            33  
+00001036                            34  end:                    *
+00001036  43F8 1054                 35      lea     $1054,A1    *schreibt den wert aus speicheradresse $1054 ins register A1
+0000103A                            36      
+0000103A  FFFF FFFF                 37      SIMHALT             ; halt simulator
+0000103E                            38  
+0000103E                            39  * Put variables and constants here
+0000103E                            40  
+0000103E                            41      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END                 1036
+LOOP1               1012
+LOOP2               1020
+START               1000
